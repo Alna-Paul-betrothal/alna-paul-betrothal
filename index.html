@@ -678,34 +678,31 @@
             autoplay: { delay: 3500, disableOnInteraction: false }
         });
 
-        // 3. FOOLPROOF AUTO-SCROLL LOGIC
+        // 3. Bulletproof Auto-Scroll Logic
         let autoScrollTimer;
         let isAutoScrolling = false;
-        let lastScrollPosition = -1;
-        let stuckCount = 0;
 
         function startAutoScroll() {
             isAutoScrolling = true;
-            stuckCount = 0; // Reset counter
             function scrollStep() {
-                if (isAutoScrolling) {
-                    window.scrollBy(0, 1.5); 
-                    
-                    // Motion Sensor: Check if the page actually moved
-                    if (Math.abs(window.scrollY - lastScrollPosition) < 0.5) {
-                        stuckCount++;
-                        // If it hasn't moved for a few frames, it has definitely hit the bottom!
-                        if (stuckCount > 5) {
-                            stopAutoScroll();
-                            return; 
-                        }
-                    } else {
-                        stuckCount = 0; // Page is still moving normally
-                    }
-                    
-                    lastScrollPosition = window.scrollY;
-                    autoScrollTimer = requestAnimationFrame(scrollStep);
+                if (!isAutoScrolling) return;
+                
+                window.scrollBy(0, 1.5); 
+                
+                // Calculates the absolute maximum height of the page to know exactly when to stop
+                const scrollHeight = Math.max(
+                    document.body.scrollHeight, document.documentElement.scrollHeight,
+                    document.body.offsetHeight, document.documentElement.offsetHeight,
+                    document.body.clientHeight, document.documentElement.clientHeight
+                );
+
+                // Stop scrolling if we have reached the bottom (with a 50px buffer for mobile address bars)
+                if (Math.ceil(window.innerHeight + window.scrollY) >= scrollHeight - 50) {
+                    stopAutoScroll();
+                    return; 
                 }
+                
+                autoScrollTimer = requestAnimationFrame(scrollStep);
             }
             scrollStep();
         }
@@ -717,8 +714,7 @@
             }
         }
 
-        // Stop if user touches the screen
-        window.addEventListener('touchstart', stopAutoScroll, { passive: true });
+        // Only stops the auto-scroll if the user ACTIVELY swipes or scrolls
         window.addEventListener('wheel', stopAutoScroll, { passive: true });
         window.addEventListener('touchmove', stopAutoScroll, { passive: true });
 
@@ -734,6 +730,7 @@
             setTimeout(() => { document.getElementById('h-text3').classList.add('active'); }, 1100);
             setTimeout(() => { document.getElementById('h-text4').classList.add('active'); }, 1500);
 
+            // Wait for entrance animations to finish, then start the scroll journey
             setTimeout(() => { startAutoScroll(); }, 4500);
 
             const audioContainer = document.getElementById('audio-container');
