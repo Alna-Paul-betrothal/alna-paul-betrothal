@@ -1,1 +1,464 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alna & Paul - Engagement Invitation</title>
+    
+    <!-- Fonts: Cinzel for perfect Capitals, Montserrat for modern clean text -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Alex+Brush&display=swap" rel="stylesheet">
+    
+    <!-- Swiper CSS for 3D Gallery -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    
+    <!-- AOS CSS for Reactive Scroll Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --olive-dark: #2F3E1C;
+            --olive-primary: #4A5D23;
+            --olive-light: #8A9A5B;
+            --olive-pale: #E9EDDF;
+            --white: #FFFFFF;
+            --bg: #FAFBFC;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg);
+            color: var(--olive-dark);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Reactive Welcome Overlay */
+        #welcome-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
+        }
+
+        .overlay-content {
+            text-align: center;
+            padding: 40px;
+            border: 1px solid var(--olive-light);
+            border-radius: 20px;
+            background: var(--bg);
+            box-shadow: 0 20px 40px rgba(74, 93, 35, 0.1);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .tap-btn {
+            background: var(--olive-primary);
+            color: var(--white);
+            border: none;
+            padding: 16px 40px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 50px;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(74, 93, 35, 0.3);
+        }
+
+        .tap-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+            background: var(--olive-dark);
+            box-shadow: 0 8px 25px rgba(74, 93, 35, 0.4);
+        }
+
+        /* Main Container */
+        .wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 0 50px rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        .header-section {
+            padding: 100px 20px 60px;
+            text-align: center;
+            background: linear-gradient(to bottom, var(--olive-pale) 0%, var(--white) 100%);
+        }
+
+        .intro-text {
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--olive-light);
+            margin-bottom: 30px;
+        }
+
+        h1.names {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3.5rem, 8vw, 5.5rem);
+            font-weight: 600;
+            color: var(--olive-dark);
+            line-height: 1.2;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .ampersand {
+            font-family: 'Alex Brush', cursive;
+            font-size: 4rem;
+            color: var(--olive-light);
+            display: block;
+            margin: -20px 0;
+        }
+
+        .verse-container {
+            margin: 60px auto;
+            max-width: 600px;
+            padding: 30px;
+            border-top: 1px solid var(--olive-pale);
+            border-bottom: 1px solid var(--olive-pale);
+        }
+
+        .verse {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--olive-primary);
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            text-align: center;
+            color: var(--olive-dark);
+            margin: 80px 0 40px;
+            position: relative;
+        }
+
+        .section-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--olive-primary);
+            margin: 15px auto 0;
+        }
+
+        /* Reactive Family Cards */
+        .family-section {
+            padding: 0 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .family-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .family-card {
+            background: var(--white);
+            border: 1px solid var(--olive-pale);
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        }
+
+        .family-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(74, 93, 35, 0.1);
+            border-color: var(--olive-light);
+        }
+
+        .family-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--olive-primary);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .family-card p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 10px;
+            color: var(--olive-dark);
+        }
+
+        .family-card .address {
+            color: var(--olive-light);
+            font-size: 0.85rem;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Reactive 3D Gallery */
+        .gallery-section {
+            padding: 20px 0;
+            background: var(--bg);
+            margin-top: 80px;
+            border-top: 1px solid var(--olive-pale);
+            border-bottom: 1px solid var(--olive-pale);
+        }
+
+        .swiper {
+            width: 100%;
+            padding: 40px 0 60px;
+        }
+
+        .swiper-slide {
+            width: 300px;
+            height: 420px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--olive-pale);
+            box-shadow: 0 15px 35px rgba(47, 62, 28, 0.2);
+            border: 8px solid var(--white);
+            transition: filter 0.3s;
+        }
+
+        .swiper-slide-active {
+            filter: brightness(1.1);
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Reactive Event Details */
+        .event-section {
+            padding: 60px 20px 100px;
+            text-align: center;
+        }
+
+        .date-box {
+            display: inline-block;
+            padding: 20px 40px;
+            background: var(--olive-primary);
+            color: var(--white);
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(74, 93, 35, 0.2);
+        }
+
+        .date-box h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .date-box p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .venue-details {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            color: var(--olive-dark);
+        }
+
+        .map-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            border: 4px solid var(--white);
+        }
+
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .family-grid { grid-template-columns: 1fr; }
+            .swiper-slide { width: 260px; height: 360px; }
+            .date-box { padding: 15px 25px; }
+            .date-box h3 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Reactive Welcome Overlay -->
+    <div id="welcome-overlay">
+        <div class="overlay-content">
+            <h2 style="font-family: 'Cinzel', serif; font-size: 2.5rem; color: var(--olive-dark); margin-bottom: 10px;">Alna & Paul</h2>
+            <p style="font-family: 'Montserrat', sans-serif; font-size: 0.9rem; letter-spacing: 3px; color: var(--olive-light);">15 . 11 . 2026</p>
+            <button class="tap-btn" onclick="openInvitation()">Tap to Open</button>
+        </div>
+    </div>
+
+    <!-- Hidden Audio Player -->
+    <div id="audio-container" style="display: none;"></div>
+
+    <div class="wrapper">
+        
+        <!-- Header -->
+        <div class="header-section" data-aos="fade-down" data-aos-duration="1500">
+            <p class="intro-text">You are joyfully invited to the betrothal of</p>
+            <h1 class="names">ALNA</h1>
+            <span class="ampersand">&</span>
+            <h1 class="names">PAUL</h1>
+            
+            <div class="verse-container" data-aos="zoom-in" data-aos-delay="300">
+                <p class="verse">"I have found the one whom my soul loves."</p>
+                <p style="margin-top: 15px; font-size: 0.8rem; letter-spacing: 2px; color: var(--olive-light); text-transform: uppercase;">Song of Solomon 3:4</p>
+            </div>
+        </div>
+
+        <!-- Family Honors -->
+        <div class="family-section">
+            <h2 class="section-header" data-aos="fade-up">Family Honors</h2>
+            <div class="family-grid">
+                
+                <!-- Bride's Family -->
+                <div class="family-card" data-aos="fade-right" data-aos-delay="200">
+                    <div class="family-title">Bride's Family</div>
+                    <p style="color: var(--olive-light); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;">Parents</p>
+                    <p><strong>Mr. Eldo Alexander & Mrs. Siji Eldo</strong></p>
+                    <div class="address">Puthenpurackal House<br>Aluva</div>
+                </div>
+
+                <!-- Groom's Family -->
+                <div class="family-card" data-aos="fade-left" data-aos-delay="400">
+                    <div class="family-title">Groom's Family</div>
+                    <p style="color: var(--olive-light); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;">Parents</p>
+                    <p><strong>Mr. Shaji Varghese & Mrs. Siji Shaji</strong></p>
+                    <div class="address">Thuruthiyil House, Malamury<br>Perumbavoor</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- 3D Photo Gallery -->
+        <div class="gallery-section">
+            <h2 class="section-header" data-aos="fade-up">Captured Moments</h2>
+            
+            <div class="swiper mySwiper" data-aos="zoom-in-up" data-aos-delay="200">
+                <div class="swiper-wrapper">
+                    <!-- Photo 1[span_0](start_span)[span_0](end_span) -->
+                    <div class="swiper-slide">
+                        <img src="1000061021.jpg" alt="Alna and Paul">
+                    </div>
+                    <!-- Photo 2[span_1](start_span)[span_1](end_span) -->
+                    <div class="swiper-slide">
+                        <img src="1000061022.jpg" alt="Alna and Paul">
+                    </div>
+                    <!-- Photo 3[span_2](start_span)[span_2](end_span) -->
+                    <div class="swiper-slide">
+                        <img src="1000061020.jpg" alt="Alna and Paul">
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+
+        <!-- Celebration Details -->
+        <div class="event-section">
+            <h2 class="section-header" data-aos="fade-up">The Celebration</h2>
+            
+            <div class="date-box" data-aos="flip-up" data-aos-delay="200">
+                <h3>NOVEMBER 15, 2026</h3>
+                <p>Sunday at 6:00 PM</p>
+            </div>
+
+            <div class="venue-details" data-aos="fade-up" data-aos-delay="300">
+                <strong>Eram International Convention and Exhibition Centre</strong>
+            </div>
+
+            <div class="map-wrapper" data-aos="fade-up" data-aos-delay="400">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.514332463066!2d76.3216893!3d10.056919!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080c3a27ec651b%3A0x6b19a1803738e4df!2sEram%20International%20Convention%20Centre!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <!-- AOS Scroll Animation Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize Scroll Animations
+        AOS.init({
+            duration: 1000,
+            once: true, // Animations happen only once while scrolling down
+            offset: 100, // Trigger animations slightly earlier
+        });
+
+        // Initialize 3D Swiper Gallery
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            coverflowEffect: {
+                rotate: 15,
+                stretch: 0,
+                depth: 300,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            initialSlide: 1,
+            autoplay: {
+                delay: 3500,
+                disableOnInteraction: false,
+            }
+        });
+
+        // Overlay & Audio Logic
+        function openInvitation() {
+            const overlay = document.getElementById('welcome-overlay');
+            // Reactive pull-up animation
+            overlay.style.transform = 'translateY(-100%)';
+            overlay.style.opacity = '0';
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 1000);
+
+            // Inject music
+            const audioContainer = document.getElementById('audio-container');
+            audioContainer.innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/uLUBmLK45AA?autoplay=1&loop=1&playlist=uLUBmLK45AA" frameborder="0" allow="autoplay"></iframe>';
+        }
+    </script>
+</body>
+</html>
