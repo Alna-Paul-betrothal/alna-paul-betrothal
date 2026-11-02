@@ -678,20 +678,32 @@
             autoplay: { delay: 3500, disableOnInteraction: false }
         });
 
-        // 3. Smart Auto-Scroll Logic (Stops completely when reaching the bottom)
+        // 3. FOOLPROOF AUTO-SCROLL LOGIC
         let autoScrollTimer;
         let isAutoScrolling = false;
+        let lastScrollPosition = -1;
+        let stuckCount = 0;
 
         function startAutoScroll() {
             isAutoScrolling = true;
+            stuckCount = 0; // Reset counter
             function scrollStep() {
                 if (isAutoScrolling) {
-                    // Sensor to detect when we reach the absolute bottom of the page
-                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
-                        stopAutoScroll();
-                        return; // Safely exit without bouncing
-                    }
                     window.scrollBy(0, 1.5); 
+                    
+                    // Motion Sensor: Check if the page actually moved
+                    if (Math.abs(window.scrollY - lastScrollPosition) < 0.5) {
+                        stuckCount++;
+                        // If it hasn't moved for a few frames, it has definitely hit the bottom!
+                        if (stuckCount > 5) {
+                            stopAutoScroll();
+                            return; 
+                        }
+                    } else {
+                        stuckCount = 0; // Page is still moving normally
+                    }
+                    
+                    lastScrollPosition = window.scrollY;
                     autoScrollTimer = requestAnimationFrame(scrollStep);
                 }
             }
@@ -705,6 +717,7 @@
             }
         }
 
+        // Stop if user touches the screen
         window.addEventListener('touchstart', stopAutoScroll, { passive: true });
         window.addEventListener('wheel', stopAutoScroll, { passive: true });
         window.addEventListener('touchmove', stopAutoScroll, { passive: true });
