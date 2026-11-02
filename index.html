@@ -60,7 +60,6 @@
         
         .reveal-1 { opacity: 0; animation: textReveal 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         .reveal-2 { opacity: 0; animation: textReveal 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards; }
-        /* Faster reveal for the button so it is visible almost immediately */
         .reveal-btn { opacity: 0; animation: textReveal 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards; }
 
         /* Delayed reveal for the main hero text */
@@ -521,7 +520,6 @@
             <h2 class="reveal-1" style="font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--text-dark); margin-bottom: 10px;">Alna & Paul</h2>
             <p class="reveal-2" style="font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 3px; color: #888; text-transform: uppercase;">15 November 2026</p>
             
-            <!-- Button wrapper now fades in quickly so it is easily visible -->
             <div class="reveal-btn">
                 <button class="tap-btn" onclick="openInvitation()">Tap to Open</button>
             </div>
@@ -676,11 +674,11 @@
         var swiper = new Swiper(".swiper-cards", {
             effect: "cards", 
             grabCursor: true,
-            loop: true, // This enables continuous infinite looping
+            loop: true, 
             autoplay: { delay: 3500, disableOnInteraction: false }
         });
 
-        // 3. Auto-Scroll Logic
+        // 3. Smart Auto-Scroll Logic (Stops completely when reaching the bottom)
         let autoScrollTimer;
         let isAutoScrolling = false;
 
@@ -688,6 +686,11 @@
             isAutoScrolling = true;
             function scrollStep() {
                 if (isAutoScrolling) {
+                    // Sensor to detect when we reach the absolute bottom of the page
+                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 5) {
+                        stopAutoScroll();
+                        return; // Safely exit without bouncing
+                    }
                     window.scrollBy(0, 1.5); 
                     autoScrollTimer = requestAnimationFrame(scrollStep);
                 }
