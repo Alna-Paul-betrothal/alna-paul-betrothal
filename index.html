@@ -29,12 +29,20 @@
             padding: 0;
         }
 
-        body {
+        /* FIXED: Removed overflow-x from body to restore native smooth momentum scrolling on iOS/Android */
+        html, body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-light);
             color: var(--text-dark);
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            width: 100%;
+        }
+
+        /* FIXED: Safe wrapper for overflow that doesn't break mobile scrolling */
+        .main-wrapper {
+            width: 100%;
+            overflow-x: hidden;
+            position: relative;
         }
 
         /* Typography */
@@ -169,7 +177,9 @@
 
         /* Hero Section */
         .hero {
+            /* FIXED: 100svh prevents the address bar from causing the page to wildly recalculate and jump */
             height: 100vh;
+            height: 100svh;
             width: 100%;
             background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url('IMG-20261102-WA0030.jpg') center/cover no-repeat;
             display: flex;
@@ -443,9 +453,6 @@
             border: 1px solid rgba(0,0,0,0.02);
             transition: transform 0.3s ease;
         }
-        .name-box:hover {
-            transform: translateY(-5px);
-        }
         .name-box p {
             font-family: 'Playfair Display', serif;
             font-size: 1.6rem;
@@ -535,127 +542,132 @@
         </button>
     </div>
 
-    <!-- Hero Section -->
-    <header class="hero">
-        <div class="hero-top-text hero-reveal" id="h-text1">Together, a beautiful beginning</div>
+    <!-- NEW MAIN WRAPPER to safely contain scrolling -->
+    <div class="main-wrapper">
         
-        <h1 class="hero-reveal animate-float" id="h-text2" style="animation-delay: 1.5s;">Alna <span class="ampersand">&</span> Paul</h1>
-        
-        <div class="hero-sub hero-reveal" id="h-text3">A love found. A lifetime to unfold.</div>
-        
-        <div class="scroll-indicator hero-reveal" id="h-text4">
-            THE STORY BEGINS
-            <div class="scroll-line"></div>
-        </div>
-    </header>
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="hero-top-text hero-reveal" id="h-text1">Together, a beautiful beginning</div>
+            
+            <h1 class="hero-reveal animate-float" id="h-text2" style="animation-delay: 1.5s;">Alna <span class="ampersand">&</span> Paul</h1>
+            
+            <div class="hero-sub hero-reveal" id="h-text3">A love found. A lifetime to unfold.</div>
+            
+            <div class="scroll-indicator hero-reveal" id="h-text4">
+                THE STORY BEGINS
+                <div class="scroll-line"></div>
+            </div>
+        </header>
 
-    <!-- Countdown Section -->
-    <section class="section-pad">
-        <h2 class="section-title" data-aos="fade-up">A date with <span class="italic-accent">forever.</span></h2>
-        <div class="section-subtitle" data-aos="fade-up" data-aos-delay="100">15 November 2026 · 6:00 pm IST</div>
+        <!-- Countdown Section -->
+        <section class="section-pad">
+            <h2 class="section-title" data-aos="fade-up">A date with <span class="italic-accent">forever.</span></h2>
+            <div class="section-subtitle" data-aos="fade-up" data-aos-delay="100">15 November 2026 · 6:00 pm IST</div>
 
-        <div class="countdown-container" data-aos="zoom-in" data-aos-delay="200">
-            <div class="time-box"><div class="time-num" id="days">00</div><div class="time-label">Days</div></div>
-            <div class="time-box"><div class="time-num" id="hours">00</div><div class="time-label">Hours</div></div>
-            <div class="time-box"><div class="time-num" id="minutes">00</div><div class="time-label">Minutes</div></div>
-            <div class="time-box"><div class="time-num" id="seconds">00</div><div class="time-label">Seconds</div></div>
-        </div>
-        <div style="font-family: 'Playfair Display', serif; font-style: italic; color: #888; margin-top: 15px;" data-aos="fade-up">Our forever is beginning.</div>
-    </section>
+            <div class="countdown-container" data-aos="zoom-in" data-aos-delay="200">
+                <div class="time-box"><div class="time-num" id="days">00</div><div class="time-label">Days</div></div>
+                <div class="time-box"><div class="time-num" id="hours">00</div><div class="time-label">Hours</div></div>
+                <div class="time-box"><div class="time-num" id="minutes">00</div><div class="time-label">Minutes</div></div>
+                <div class="time-box"><div class="time-num" id="seconds">00</div><div class="time-label">Seconds</div></div>
+            </div>
+            <div style="font-family: 'Playfair Display', serif; font-style: italic; color: #888; margin-top: 15px;" data-aos="fade-up">Our forever is beginning.</div>
+        </section>
 
-    <!-- Story / Stacked Photos Section -->
-    <section class="story-text-section">
-        <h2 data-aos="fade-up">Some things just feel <span class="italic-accent">like home.</span></h2>
-        <p data-aos="fade-up" data-aos-delay="100">Not every love story arrives with a grand gesture. Some unfold in the quiet: in shared laughter, in the comfort of a familiar voice, in the simple joy of being understood.</p>
-        <p data-aos="fade-up" data-aos-delay="200">For us, forever is a collection of those little things. And now, hand in hand, we're ready for our favourite chapter yet.</p>
-        <div class="signature" data-aos="fade-up" data-aos-delay="300">With love, Alna & Paul</div>
+        <!-- Story / Stacked Photos Section -->
+        <section class="story-text-section">
+            <h2 data-aos="fade-up">Some things just feel <span class="italic-accent">like home.</span></h2>
+            <p data-aos="fade-up" data-aos-delay="100">Not every love story arrives with a grand gesture. Some unfold in the quiet: in shared laughter, in the comfort of a familiar voice, in the simple joy of being understood.</p>
+            <p data-aos="fade-up" data-aos-delay="200">For us, forever is a collection of those little things. And now, hand in hand, we're ready for our favourite chapter yet.</p>
+            <div class="signature" data-aos="fade-up" data-aos-delay="300">With love, Alna & Paul</div>
 
-        <div class="stack-container" data-aos="zoom-in" data-aos-delay="400">
-            <div class="swiper swiper-cards">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="IMG-20261102-WA0028(2).jpg" alt="Memory 1"></div>
-                    <div class="swiper-slide"><img src="IMG-20261102-WA0031.jpg" alt="Memory 2"></div>
-                    <div class="swiper-slide"><img src="IMG-20261102-WA0025(1).jpg" alt="Memory 3"></div>
-                    <div class="swiper-slide"><img src="IMG-20261102-WA0023(1).jpg" alt="Memory 4"></div>
+            <div class="stack-container" data-aos="zoom-in" data-aos-delay="400">
+                <div class="swiper swiper-cards">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="IMG-20261102-WA0028(2).jpg" alt="Memory 1"></div>
+                        <div class="swiper-slide"><img src="IMG-20261102-WA0031.jpg" alt="Memory 2"></div>
+                        <div class="swiper-slide"><img src="IMG-20261102-WA0025(1).jpg" alt="Memory 3"></div>
+                        <div class="swiper-slide"><img src="IMG-20261102-WA0023(1).jpg" alt="Memory 4"></div>
+                    </div>
+                </div>
+                <div class="swipe-hint" style="text-align: center;">Scroll or swipe to turn the memories</div>
+            </div>
+        </section>
+
+        <!-- Event Details (Dark Navy Section) -->
+        <section class="dark-section">
+            <h2 class="section-title" data-aos="fade-up" style="font-size: 2.8rem; line-height: 1.2;">Come for the love.<br><span class="italic-accent" style="color: #E2D3B8;">Stay for the joy.</span></h2>
+            <p data-aos="fade-up" data-aos-delay="100" style="color: rgba(255,255,255,0.7); max-width: 400px; margin: 0 auto 40px;">Our favourite people, all in one place. We can't wait to celebrate this beginning with you.</p>
+
+            <div class="event-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="event-block">
+                    <div class="event-label">WHEN</div>
+                    <div class="event-val">15 November 2026</div>
+                    <div class="event-sub">6:00 pm IST</div>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Alna+%26+Paul+-+Betrothal&dates=20261115T123000Z/20261115T153000Z&details=Join%20us%20as%20we%20celebrate%20the%20betrothal%20of%20Alna%20and%20Paul!&location=Eram%20International%20Convention%20and%20Exhibition%20Centre%2C%20Aluva%2C%20Kerala%2C%20India" target="_blank" class="action-btn">
+                        🗓 Add to Google Calendar
+                    </a>
+                </div>
+                
+                <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+                
+                <div class="event-block">
+                    <div class="event-label">WHERE</div>
+                    <div class="event-val">Eram International Convention Centre</div>
+                    <div class="event-sub">Aluva, Kerala, India</div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Eram+International+Convention+and+Exhibition+Centre+Aluva" target="_blank" class="action-btn">
+                        📍 View on Google Maps
+                    </a>
+                </div>
+
+                <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+                
+                <div class="event-block">
+                    <div class="event-label">THE DAY</div>
+                    <div class="event-val" style="line-height: 1.4;">The Ceremony.<br>Dinner.<br>All the love.</div>
                 </div>
             </div>
-            <div class="swipe-hint" style="text-align: center;">Scroll or swipe to turn the memories</div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Event Details (Dark Navy Section) -->
-    <section class="dark-section">
-        <h2 class="section-title" data-aos="fade-up" style="font-size: 2.8rem; line-height: 1.2;">Come for the love.<br><span class="italic-accent" style="color: #E2D3B8;">Stay for the joy.</span></h2>
-        <p data-aos="fade-up" data-aos-delay="100" style="color: rgba(255,255,255,0.7); max-width: 400px; margin: 0 auto 40px;">Our favourite people, all in one place. We can't wait to celebrate this beginning with you.</p>
+        <!-- Family Honors (Light Theme Overlap) -->
+        <section class="family-section">
+            <div class="event-label" data-aos="fade-up" style="color: var(--accent-gold); margin-bottom: 10px;">WITH HEARTFELT GRATITUDE</div>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100" style="margin-bottom: 20px;">The People <span class="italic-accent">Behind Our Day</span></h2>
+            <p data-aos="fade-up" data-aos-delay="200" style="max-width: 500px; margin: 0 auto 50px; color: #666; line-height: 1.6;">Thank you for the love, care, and effort you have put into making our day so special. We are so grateful to have you by our side.</p>
 
-        <div class="event-card" data-aos="fade-up" data-aos-delay="200">
-            <div class="event-block">
-                <div class="event-label">WHEN</div>
-                <div class="event-val">15 November 2026</div>
-                <div class="event-sub">6:00 pm IST</div>
-                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Alna+%26+Paul+-+Betrothal&dates=20261115T123000Z/20261115T153000Z&details=Join%20us%20as%20we%20celebrate%20the%20betrothal%20of%20Alna%20and%20Paul!&location=Eram%20International%20Convention%20and%20Exhibition%20Centre%2C%20Aluva%2C%20Kerala%2C%20India" target="_blank" class="action-btn">
-                    🗓 Add to Google Calendar
-                </a>
-            </div>
+            <!-- Bride's Family -->
+            <div class="event-label" data-aos="fade-up" style="color: #999; margin-top: 20px;">BRIDE'S PARENTS</div>
+            <div class="name-box" data-aos="fade-up"><span></span><p>Mr. Eldo Alexander</p></div>
+            <div class="name-box" data-aos="fade-up" data-aos-delay="100"><span></span><p>Mrs. Siji Eldo</p></div>
             
-            <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+            <div class="event-label" data-aos="fade-up" style="color: #999; margin-top: 30px;">BRIDE'S BROTHER</div>
+            <div class="name-box" data-aos="fade-up"><span></span><p>Alex Eldo</p></div>
+
+            <hr style="width: 50px; border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 50px auto;">
+
+            <!-- Groom's Family -->
+            <div class="event-label" data-aos="fade-up" style="color: #999;">GROOM'S PARENTS</div>
+            <div class="name-box" data-aos="fade-up"><span></span><p>Mr. Shaji Varghese</p></div>
+            <div class="name-box" data-aos="fade-up" data-aos-delay="100"><span></span><p>Mrs. Siji Shaji</p></div>
+
+            <div class="event-label" data-aos="fade-up" style="color: #999; margin-top: 30px;">GROOM'S BROTHER</div>
+            <div class="name-box" data-aos="fade-up"><span></span><p>Joyal Shaji</p></div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-names animate-float">Alna <span class="italic-accent">&</span> Paul</div>
+            <div style="font-family: 'Playfair Display', serif; font-style: italic; color: #666;">A lifetime, starting with us.</div>
             
-            <div class="event-block">
-                <div class="event-label">WHERE</div>
-                <div class="event-val">Eram International Convention Centre</div>
-                <div class="event-sub">Aluva, Kerala, India</div>
-                <a href="https://www.google.com/maps/search/?api=1&query=Eram+International+Convention+and+Exhibition+Centre+Aluva" target="_blank" class="action-btn">
-                    📍 View on Google Maps
-                </a>
-            </div>
-
-            <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+            <hr style="width: 100%; max-width: 400px; border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 40px 0 0;">
             
-            <div class="event-block">
-                <div class="event-label">THE DAY</div>
-                <div class="event-val" style="line-height: 1.4;">The Ceremony.<br>Dinner.<br>All the love.</div>
+            <div class="footer-controls">
+                <button class="control-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    Back to Top <span>↑</span>
+                </button>
             </div>
-        </div>
-    </section>
-
-    <!-- Family Honors (Light Theme Overlap) -->
-    <section class="family-section">
-        <div class="event-label" data-aos="fade-up" style="color: var(--accent-gold); margin-bottom: 10px;">WITH HEARTFELT GRATITUDE</div>
-        <h2 class="section-title" data-aos="fade-up" data-aos-delay="100" style="margin-bottom: 20px;">The People <span class="italic-accent">Behind Our Day</span></h2>
-        <p data-aos="fade-up" data-aos-delay="200" style="max-width: 500px; margin: 0 auto 50px; color: #666; line-height: 1.6;">Thank you for the love, care, and effort you have put into making our day so special. We are so grateful to have you by our side.</p>
-
-        <!-- Bride's Family -->
-        <div class="event-label" data-aos="fade-up" style="color: #999; margin-top: 20px;">BRIDE'S PARENTS</div>
-        <div class="name-box" data-aos="fade-up"><span></span><p>Mr. Eldo Alexander</p></div>
-        <div class="name-box" data-aos="fade-up" data-aos-delay="100"><span></span><p>Mrs. Siji Eldo</p></div>
-        
-        <div class="event-label" data-aos="fade-up" style="color: #999; margin-top: 30px;">BRIDE'S BROTHER</div>
-        <div class="name-box" data-aos="fade-up"><span></span><p>Alex Eldo</p></div>
-
-        <hr style="width: 50px; border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 50px auto;">
-
-        <!-- Groom's Family -->
-        <div class="event-label" data-aos="fade-up" style="color: #999;">GROOM'S PARENTS</div>
-        <div class="name-box" data-aos="fade-up"><span></span><p>Mr. Shaji Varghese</p></div>
-        <div class="name-box" data-aos="fade-up" data-aos-delay="100"><span></span><p>Mrs. Siji Shaji</p></div>
-
-        <div class="event-label" data-aos="fade-up" style="color: #999; margin-top: 30px;">GROOM'S BROTHER</div>
-        <div class="name-box" data-aos="fade-up"><span></span><p>Joyal Shaji</p></div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-names animate-float">Alna <span class="italic-accent">&</span> Paul</div>
-        <div style="font-family: 'Playfair Display', serif; font-style: italic; color: #666;">A lifetime, starting with us.</div>
-        
-        <hr style="width: 100%; max-width: 400px; border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 40px 0 0;">
-        
-        <div class="footer-controls">
-            <button class="control-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                Back to Top <span>↑</span>
-            </button>
-        </div>
-    </footer>
+        </footer>
+    
+    </div> <!-- End of Main Wrapper -->
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"></script>
@@ -663,8 +675,8 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script>
-        // 1. Initialize Scroll Reveal Animations
-        AOS.init({ duration: 1000, once: true, offset: 50 });
+        // 1. Initialize Scroll Reveal Animations (Offset lowered slightly for smoother reveals)
+        AOS.init({ duration: 1000, once: true, offset: 10 });
 
         // 2. Initialize Cards Swiper with INFINITE LOOP
         var swiper = new Swiper(".swiper-cards", {
@@ -679,7 +691,12 @@
             const overlay = document.getElementById('welcome-overlay');
             overlay.style.transform = 'translateY(-100%)';
             overlay.style.opacity = '0';
-            setTimeout(() => { overlay.style.display = 'none'; }, 1200);
+            
+            // Make completely unclickable once it fades out
+            setTimeout(() => { 
+                overlay.style.display = 'none'; 
+                overlay.style.pointerEvents = 'none';
+            }, 1200);
 
             // Animate hero text in
             setTimeout(() => { document.getElementById('h-text1').classList.add('active'); }, 300);
