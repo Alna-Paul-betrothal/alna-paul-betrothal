@@ -66,6 +66,22 @@
             50% { transform: translateY(-10px); }
         }
 
+        /* Continuous Pulse Animation for Mobile Reactivity */
+        @keyframes pulse-glow {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(74, 93, 35, 0.6);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 15px rgba(74, 93, 35, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(74, 93, 35, 0);
+            }
+        }
+
         .tap-btn {
             background: var(--olive-primary);
             color: var(--white);
@@ -78,14 +94,7 @@
             border-radius: 50px;
             margin-top: 25px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 15px rgba(74, 93, 35, 0.3);
-        }
-
-        .tap-btn:hover {
-            transform: scale(1.05) translateY(-2px);
-            background: var(--olive-dark);
-            box-shadow: 0 8px 25px rgba(74, 93, 35, 0.4);
+            animation: pulse-glow 2s infinite;
         }
 
         /* Main Container */
@@ -186,12 +195,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.02);
         }
 
-        .family-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(74, 93, 35, 0.1);
-            border-color: var(--olive-light);
-        }
-
         .family-title {
             font-family: 'Cinzel', serif;
             font-size: 1.5rem;
@@ -285,11 +288,11 @@
             color: var(--olive-dark);
         }
 
-        /* Map Button Styles */
+        /* Mobile-Reactive Map Button */
         .map-btn {
             display: inline-block;
-            background-color: var(--white);
-            color: var(--olive-primary);
+            background-color: var(--olive-primary);
+            color: var(--white);
             text-decoration: none;
             padding: 16px 45px;
             font-size: 1rem;
@@ -297,18 +300,9 @@
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
-            border: 2px solid var(--olive-primary);
             border-radius: 50px;
             margin-top: 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(74, 93, 35, 0.1);
-        }
-
-        .map-btn:hover {
-            background-color: var(--olive-primary);
-            color: var(--white);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(74, 93, 35, 0.2);
+            animation: pulse-glow 2s infinite;
         }
 
         @media (max-width: 768px) {
@@ -406,7 +400,7 @@
                 <span style="font-size: 0.95rem; color: var(--olive-light); display: block; margin-top: 10px;">Perumbavoor</span>
             </div>
 
-            <!-- Map Button (Replaces embedded map) -->
+            <!-- Pulsing Map Button -->
             <div data-aos="fade-up" data-aos-delay="400">
                 <a href="https://www.google.com/maps/search/?api=1&query=Eram+International+Convention+and+Exhibition+Centre+Perumbavoor" target="_blank" class="map-btn">
                     Open in Google Maps
