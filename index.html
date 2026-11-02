@@ -16,10 +16,11 @@
 
     <style>
         :root {
-            --bg-light: #F5F4F0; /* Soft warm ivory */
-            --text-dark: #1E293B; /* Deep slate blue */
-            --accent-gold: #92714D; /* Elegant brown/gold */
-            --bg-dark: #1F2E3A; /* Dark navy section */
+            --bg-light: #F5F4F0; 
+            --text-dark: #1E293B; 
+            --accent-gold: #92714D; 
+            --accent-light: #C4A478;
+            --bg-dark: #1F2E3A; 
             --white: #FFFFFF;
         }
 
@@ -37,15 +38,46 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Typography */
+        /* Typography & New Text Animations */
         h1, h2, h3, .serif {
             font-family: 'Playfair Display', serif;
             font-weight: 500;
         }
         
+        /* Shimmering Gold Italic Accent */
+        @keyframes shimmerText {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        
         .italic-accent {
             font-style: italic;
+            background: linear-gradient(120deg, var(--accent-gold) 20%, #D8BA90 40%, var(--accent-gold) 60%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shimmerText 5s linear infinite;
+        }
+
+        /* Touch/Hover Reactive Text */
+        .reactive-text {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s ease;
+            display: inline-block;
+        }
+        .reactive-text:hover, .reactive-text:active {
+            transform: translateY(-3px) scale(1.02);
             color: var(--accent-gold);
+        }
+
+        /* Continuous Float for Hero Text */
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        
+        .hero-animated-title {
+            animation: gentleFloat 4s ease-in-out infinite;
         }
 
         /* Reactive Welcome Overlay */
@@ -68,12 +100,7 @@
             border-radius: 20px;
             background: var(--white);
             box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            animation: gentleFloat 4s ease-in-out infinite; /* Floating box */
         }
 
         @keyframes pulse-glow {
@@ -168,11 +195,12 @@
             font-size: 4.5rem;
             line-height: 1;
             margin-bottom: 15px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         .hero h1 .ampersand {
             font-size: 3rem;
             font-style: italic;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255,255,255,0.9);
         }
 
         .hero-sub {
@@ -304,6 +332,7 @@
             font-style: italic;
             margin-top: 30px;
             color: #666;
+            animation: gentleFloat 3s infinite; /* Floating hint */
         }
 
         /* Story Text Section */
@@ -394,9 +423,10 @@
         .action-btn:hover {
             background: var(--white);
             color: var(--bg-dark);
+            transform: scale(1.05); /* Reactive scaling */
         }
 
-        /* Family Honors (Gratitude) Section */
+        /* Family Honors Section */
         .family-section {
             background-color: var(--bg-light);
             padding: 100px 20px;
@@ -416,15 +446,21 @@
             max-width: 400px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.04);
             border: 1px solid rgba(0,0,0,0.02);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
         }
-        .name-box:hover {
-            transform: translateY(-5px);
+        .name-box:hover, .name-box:active {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(146, 113, 77, 0.15);
         }
         .name-box p {
             font-family: 'Playfair Display', serif;
             font-size: 1.6rem;
             color: var(--text-dark);
+            transition: color 0.3s ease;
+        }
+        .name-box:hover p, .name-box:active p {
+            color: var(--accent-gold);
         }
         .name-box span {
             display: block;
@@ -433,6 +469,10 @@
             height: 1px;
             background: var(--accent-gold);
             margin: 0 auto 15px;
+            transition: width 0.3s ease;
+        }
+        .name-box:hover span, .name-box:active span {
+            width: 60px; /* Line grows on react */
         }
 
         /* Footer */
@@ -473,6 +513,11 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: transform 0.3s ease;
+        }
+        .control-btn:hover {
+            transform: translateY(-3px);
+            color: var(--accent-gold);
         }
 
         @media (max-width: 768px) {
@@ -498,10 +543,10 @@
     <div id="audio-container" style="display: none;"></div>
 
     <!-- Floating Pill Header -->
-    <div class="glass-header">
-        <div style="font-size: 1.2rem;">💍</div>
-        <div class="header-title">The Betrothal</div>
-        <button class="menu-btn">
+    <div class="glass-header" data-aos="fade-down" data-aos-delay="1000">
+        <div class="reactive-text" style="font-size: 1.2rem;">💍</div>
+        <div class="header-title reactive-text">The Betrothal</div>
+        <button class="menu-btn reactive-text">
             <span></span>
             <span></span>
         </button>
@@ -509,11 +554,11 @@
 
     <!-- Hero Section -->
     <header class="hero">
-        <div class="hero-top-text" data-aos="fade-down" data-aos-duration="1500">Together, a beautiful beginning</div>
-        <h1 data-aos="zoom-in" data-aos-duration="1500">Alna <span class="ampersand">&</span> Paul</h1>
-        <div class="hero-sub" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300">A love found. A lifetime to unfold.</div>
+        <div class="hero-top-text reactive-text" data-aos="fade-down" data-aos-duration="1500" data-aos-delay="200">Together, a beautiful beginning</div>
+        <h1 class="hero-animated-title" data-aos="zoom-in" data-aos-duration="1500" data-aos-delay="400">Alna <span class="ampersand">&</span> Paul</h1>
+        <div class="hero-sub reactive-text" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="600">A love found. A lifetime to unfold.</div>
         
-        <div class="scroll-indicator">
+        <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="1000">
             THE STORY BEGINS
             <div class="scroll-line"></div>
         </div>
@@ -521,10 +566,10 @@
 
     <!-- Countdown Section -->
     <section class="section-pad">
-        <h2 class="section-title" data-aos="fade-up">A date with <span class="italic-accent">forever.</span></h2>
-        <div class="section-subtitle" data-aos="fade-up" data-aos-delay="100">15 November 2026 · 6:00 pm IST</div>
+        <h2 class="section-title reactive-text" data-aos="fade-up">A date with <span class="italic-accent">forever.</span></h2>
+        <div class="section-subtitle reactive-text" data-aos="fade-up" data-aos-delay="150">15 November 2026 · 6:00 pm IST</div>
 
-        <div class="countdown-container" data-aos="zoom-in" data-aos-delay="200">
+        <div class="countdown-container" data-aos="zoom-in" data-aos-delay="300">
             <div class="time-box">
                 <div class="time-num" id="days">00</div>
                 <div class="time-label">Days</div>
@@ -542,43 +587,42 @@
                 <div class="time-label">Seconds</div>
             </div>
         </div>
-        <div style="font-family: 'Playfair Display', serif; font-style: italic; color: #888; margin-top: 15px;" data-aos="fade-up">Our forever is beginning.</div>
+        <div class="reactive-text" style="font-family: 'Playfair Display', serif; font-style: italic; color: #888; margin-top: 15px;" data-aos="fade-up" data-aos-delay="400">Our forever is beginning.</div>
     </section>
 
     <!-- Story / Stacked Photos Section -->
     <section class="story-text-section">
-        <h2 data-aos="fade-up">Some things just feel <span class="italic-accent">like home.</span></h2>
-        <p data-aos="fade-up" data-aos-delay="100">Not every love story arrives with a grand gesture. Some unfold in the quiet: in shared laughter, in the comfort of a familiar voice, in the simple joy of being understood.</p>
-        <p data-aos="fade-up" data-aos-delay="200">For us, forever is a collection of those little things. And now, hand in hand, we're ready for our favourite chapter yet.</p>
-        <div class="signature" data-aos="fade-up" data-aos-delay="300">With love, Alna & Paul</div>
+        <h2 class="reactive-text" data-aos="fade-up">Some things just feel <span class="italic-accent">like home.</span></h2>
+        <p class="reactive-text" data-aos="fade-up" data-aos-delay="150">Not every love story arrives with a grand gesture. Some unfold in the quiet: in shared laughter, in the comfort of a familiar voice, in the simple joy of being understood.</p>
+        <p class="reactive-text" data-aos="fade-up" data-aos-delay="300">For us, forever is a collection of those little things. And now, hand in hand, we're ready for our favourite chapter yet.</p>
+        <div class="signature reactive-text" data-aos="fade-up" data-aos-delay="450">With love, Alna & Paul</div>
 
         <!-- 3D Stacked "Polaroid" Gallery -->
-        <div class="stack-container" data-aos="zoom-in" data-aos-delay="400">
+        <div class="stack-container" data-aos="zoom-in" data-aos-delay="600">
             <div class="swiper swiper-cards">
                 <div class="swiper-wrapper">
-                    <!-- Remaining 4 images -->
                     <div class="swiper-slide"><img src="IMG-20261102-WA0028(2).jpg" alt="Memory 1"></div>
                     <div class="swiper-slide"><img src="IMG-20261102-WA0031.jpg" alt="Memory 2"></div>
                     <div class="swiper-slide"><img src="IMG-20261102-WA0025(1).jpg" alt="Memory 3"></div>
                     <div class="swiper-slide"><img src="IMG-20261102-WA0023(1).jpg" alt="Memory 4"></div>
                 </div>
             </div>
-            <div class="swipe-hint" style="text-align: center;">Scroll or swipe to turn the memories</div>
+            <div class="swipe-hint">Scroll or swipe to turn the memories</div>
         </div>
     </section>
 
     <!-- Event Details (Dark Navy Section) -->
     <section class="dark-section">
-        <h2 class="section-title" data-aos="fade-up" style="font-size: 2.8rem; line-height: 1.2;">Come for the love.<br><span class="italic-accent" style="color: #E2D3B8;">Stay for the joy.</span></h2>
-        <p data-aos="fade-up" data-aos-delay="100" style="color: rgba(255,255,255,0.7); max-width: 400px; margin: 0 auto 40px;">Our favourite people, all in one place. We can't wait to celebrate this beginning with you.</p>
+        <h2 class="section-title reactive-text" data-aos="fade-up" style="font-size: 2.8rem; line-height: 1.2;">Come for the love.<br><span class="italic-accent" style="background-image: linear-gradient(120deg, #E2D3B8 20%, #FFF 40%, #E2D3B8 60%);">Stay for the joy.</span></h2>
+        <p class="reactive-text" data-aos="fade-up" data-aos-delay="150" style="color: rgba(255,255,255,0.7); max-width: 400px; margin: 0 auto 40px;">Our favourite people, all in one place. We can't wait to celebrate this beginning with you.</p>
 
-        <div class="event-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="event-card" data-aos="fade-up" data-aos-delay="300">
             
             <!-- Date Block -->
             <div class="event-block">
-                <div class="event-label">WHEN</div>
-                <div class="event-val">15 November 2026</div>
-                <div class="event-sub">6:00 pm IST</div>
+                <div class="event-label reactive-text">WHEN</div>
+                <div class="event-val reactive-text">15 November 2026</div>
+                <div class="event-sub reactive-text">6:00 pm IST</div>
                 <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Alna+%26+Paul+-+Betrothal&dates=20261115T123000Z/20261115T153000Z&details=Join%20us%20as%20we%20celebrate%20the%20betrothal%20of%20Alna%20and%20Paul!&location=Eram%20International%20Convention%20and%20Exhibition%20Centre%2C%20Aluva%2C%20Kerala%2C%20India" target="_blank" class="action-btn">
                     🗓 Add to Google Calendar
                 </a>
@@ -588,9 +632,9 @@
             
             <!-- Location Block -->
             <div class="event-block">
-                <div class="event-label">WHERE</div>
-                <div class="event-val">Eram International Convention Centre</div>
-                <div class="event-sub">Aluva, Kerala, India</div>
+                <div class="event-label reactive-text">WHERE</div>
+                <div class="event-val reactive-text">Eram International Convention Centre</div>
+                <div class="event-sub reactive-text">Aluva, Kerala, India</div>
                 <a href="https://www.google.com/maps/search/?api=1&query=Eram+International+Convention+and+Exhibition+Centre+Aluva" target="_blank" class="action-btn">
                     📍 View on Google Maps
                 </a>
@@ -600,8 +644,8 @@
             
             <!-- The Day Block -->
             <div class="event-block">
-                <div class="event-label">THE DAY</div>
-                <div class="event-val" style="line-height: 1.4;">The Ceremony.<br>Dinner.<br>All the love.</div>
+                <div class="event-label reactive-text">THE DAY</div>
+                <div class="event-val reactive-text" style="line-height: 1.4;">The Ceremony.<br>Dinner.<br>All the love.</div>
             </div>
 
         </div>
@@ -609,42 +653,42 @@
 
     <!-- Family Honors (Light Theme Overlap) -->
     <section class="family-section">
-        <div class="event-label" data-aos="fade-up" style="color: var(--accent-gold); margin-bottom: 10px;">WITH HEARTFELT GRATITUDE</div>
-        <h2 class="section-title" data-aos="fade-up" data-aos-delay="100" style="margin-bottom: 20px;">The People <span class="italic-accent">Behind Our Day</span></h2>
-        <p data-aos="fade-up" data-aos-delay="200" style="max-width: 500px; margin: 0 auto 50px; color: #666; line-height: 1.6;">Thank you for the love, care, and effort you have put into making our day so special. We are so grateful to have you by our side.</p>
+        <div class="event-label reactive-text" data-aos="fade-up" style="color: var(--accent-gold); margin-bottom: 10px;">WITH HEARTFELT GRATITUDE</div>
+        <h2 class="section-title reactive-text" data-aos="fade-up" data-aos-delay="150" style="margin-bottom: 20px;">The People <span class="italic-accent">Behind Our Day</span></h2>
+        <p class="reactive-text" data-aos="fade-up" data-aos-delay="300" style="max-width: 500px; margin: 0 auto 50px; color: #666; line-height: 1.6;">Thank you for the love, care, and effort you have put into making our day so special. We are so grateful to have you by our side.</p>
 
         <!-- Bride's Family -->
-        <div class="event-label" data-aos="fade-up" style="color: #999; margin-top: 20px;">BRIDE'S PARENTS</div>
-        <div class="name-box" data-aos="fade-up">
+        <div class="event-label reactive-text" data-aos="fade-up" data-aos-delay="100" style="color: #999; margin-top: 20px;">BRIDE'S PARENTS</div>
+        <div class="name-box" data-aos="fade-up" data-aos-delay="200">
             <span></span>
             <p>Mr. Eldo Alexander</p>
         </div>
-        <div class="name-box" data-aos="fade-up" data-aos-delay="100">
+        <div class="name-box" data-aos="fade-up" data-aos-delay="300">
             <span></span>
             <p>Mrs. Siji Eldo</p>
         </div>
         
-        <div class="event-label" data-aos="fade-up" style="color: #999; margin-top: 30px;">BRIDE'S BROTHER</div>
-        <div class="name-box" data-aos="fade-up">
+        <div class="event-label reactive-text" data-aos="fade-up" data-aos-delay="400" style="color: #999; margin-top: 30px;">BRIDE'S BROTHER</div>
+        <div class="name-box" data-aos="fade-up" data-aos-delay="500">
             <span></span>
             <p>Alex Eldo</p>
         </div>
 
-        <hr style="width: 50px; border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 50px auto;">
+        <hr style="width: 50px; border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 50px auto;" data-aos="fade-in">
 
         <!-- Groom's Family -->
-        <div class="event-label" data-aos="fade-up" style="color: #999;">GROOM'S PARENTS</div>
-        <div class="name-box" data-aos="fade-up">
+        <div class="event-label reactive-text" data-aos="fade-up" data-aos-delay="100" style="color: #999;">GROOM'S PARENTS</div>
+        <div class="name-box" data-aos="fade-up" data-aos-delay="200">
             <span></span>
             <p>Mr. Shaji Varghese</p>
         </div>
-        <div class="name-box" data-aos="fade-up" data-aos-delay="100">
+        <div class="name-box" data-aos="fade-up" data-aos-delay="300">
             <span></span>
             <p>Mrs. Siji Shaji</p>
         </div>
 
-        <div class="event-label" data-aos="fade-up" style="color: #999; margin-top: 30px;">GROOM'S BROTHER</div>
-        <div class="name-box" data-aos="fade-up">
+        <div class="event-label reactive-text" data-aos="fade-up" data-aos-delay="400" style="color: #999; margin-top: 30px;">GROOM'S BROTHER</div>
+        <div class="name-box" data-aos="fade-up" data-aos-delay="500">
             <span></span>
             <p>Joyal Shaji</p>
         </div>
@@ -652,12 +696,12 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="footer-names">Alna <span class="italic-accent">&</span> Paul</div>
-        <div style="font-family: 'Playfair Display', serif; font-style: italic; color: #666;">A lifetime, starting with us.</div>
+        <div class="footer-names hero-animated-title" data-aos="zoom-in">Alna <span class="italic-accent">&</span> Paul</div>
+        <div class="reactive-text" data-aos="fade-up" data-aos-delay="150" style="font-family: 'Playfair Display', serif; font-style: italic; color: #666;">A lifetime, starting with us.</div>
         
-        <hr style="width: 100%; max-width: 400px; border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 40px 0 0;">
+        <hr style="width: 100%; max-width: 400px; border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 40px 0 0;" data-aos="fade-in">
         
-        <div class="footer-controls">
+        <div class="footer-controls" data-aos="fade-up" data-aos-delay="300">
             <button class="control-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
                 Back to Top <span>↑</span>
             </button>
@@ -670,7 +714,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script>
-        // Initialize Animations
+        // Initialize Scroll Animations
         AOS.init({
             duration: 1000,
             once: true,
