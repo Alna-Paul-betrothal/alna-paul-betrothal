@@ -674,84 +674,25 @@
             autoplay: { delay: 3500, disableOnInteraction: false }
         });
 
-        // 3. BULLETPROOF AUTO-SCROLL LOGIC
-        let autoScrollTimer;
-        let isAutoScrolling = false;
-        let lastY = -1;
-        let stuckFrames = 0;
-
-        function startAutoScroll() {
-            isAutoScrolling = true;
-            stuckFrames = 0;
-            
-            function scrollStep() {
-                if (!isAutoScrolling) return;
-                
-                window.scrollBy(0, 1.5); 
-                
-                // Get true dynamic height
-                let scrollHeight = Math.max(
-                    document.body.scrollHeight, document.documentElement.scrollHeight,
-                    document.body.offsetHeight, document.documentElement.offsetHeight,
-                    document.body.clientHeight, document.documentElement.clientHeight
-                );
-                
-                let currentPosition = window.innerHeight + window.scrollY;
-                
-                // Primary Stop: Physically reached the end of the webpage
-                if (currentPosition >= scrollHeight - 10) {
-                    stopAutoScroll();
-                    return;
-                }
-
-                // Backup Stop: The completely forgiving "Stuck Sensor" (allows for a full second of animation lag before deciding it's stuck)
-                if (Math.abs(window.scrollY - lastY) < 1) {
-                    stuckFrames++;
-                    if (stuckFrames > 60) {
-                        stopAutoScroll();
-                        return;
-                    }
-                } else {
-                    stuckFrames = 0; 
-                }
-                
-                lastY = window.scrollY;
-                autoScrollTimer = requestAnimationFrame(scrollStep);
-            }
-            scrollStep();
-        }
-
-        function stopAutoScroll() {
-            if (isAutoScrolling) {
-                isAutoScrolling = false;
-                cancelAnimationFrame(autoScrollTimer);
-            }
-        }
-
-        // FIXED: Only stops if you actively SWIPE or SCROLL with your finger. Tapping screen will NOT stop it.
-        window.addEventListener('touchmove', stopAutoScroll, { passive: true });
-        window.addEventListener('wheel', stopAutoScroll, { passive: true });
-
-        // 4. Overlay & Audio Logic
+        // 3. Overlay & Audio Logic
         function openInvitation() {
             const overlay = document.getElementById('welcome-overlay');
             overlay.style.transform = 'translateY(-100%)';
             overlay.style.opacity = '0';
             setTimeout(() => { overlay.style.display = 'none'; }, 1200);
 
+            // Animate hero text in
             setTimeout(() => { document.getElementById('h-text1').classList.add('active'); }, 300);
             setTimeout(() => { document.getElementById('h-text2').classList.add('active'); }, 700);
             setTimeout(() => { document.getElementById('h-text3').classList.add('active'); }, 1100);
             setTimeout(() => { document.getElementById('h-text4').classList.add('active'); }, 1500);
 
-            // Wait for entrance animations to finish, then start the scroll journey
-            setTimeout(() => { startAutoScroll(); }, 4500);
-
+            // Inject YouTube Music
             const audioContainer = document.getElementById('audio-container');
             audioContainer.innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/uLUBmLK45AA?autoplay=1&loop=1&playlist=uLUBmLK45AA" frameborder="0" allow="autoplay"></iframe>';
         }
 
-        // 5. Countdown Logic (Target: Nov 15, 2026, 18:00:00)
+        // 4. Countdown Logic (Target: Nov 15, 2026, 18:00:00)
         const countDownDate = new Date("Nov 15, 2026 18:00:00").getTime();
         const x = setInterval(function() {
             const now = new Date().getTime();
