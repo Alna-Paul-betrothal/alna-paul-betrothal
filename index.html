@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -369,17 +368,14 @@
             
             <div class="swiper mySwiper" data-aos="zoom-in-up" data-aos-delay="200">
                 <div class="swiper-wrapper">
-                    <!-- Photo 1[span_0](start_span)[span_0](end_span) -->
                     <div class="swiper-slide">
-                        <img src="1000061021.jpg" alt="Alna and Paul">
+                        <img src="MWL09488.jpg.jpeg" alt="Alna and Paul">
                     </div>
-                    <!-- Photo 2[span_1](start_span)[span_1](end_span) -->
                     <div class="swiper-slide">
-                        <img src="1000061022.jpg" alt="Alna and Paul">
+                        <img src="MWL09504.jpg.jpeg" alt="Alna and Paul">
                     </div>
-                    <!-- Photo 3[span_2](start_span)[span_2](end_span) -->
                     <div class="swiper-slide">
-                        <img src="1000061020.jpg" alt="Alna and Paul">
+                        <img src="MWL09832.jpg.jpeg" alt="Alna and Paul">
                     </div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -416,8 +412,8 @@
         // Initialize Scroll Animations
         AOS.init({
             duration: 1000,
-            once: true, // Animations happen only once while scrolling down
-            offset: 100, // Trigger animations slightly earlier
+            once: true,
+            offset: 100,
         });
 
         // Initialize 3D Swiper Gallery
@@ -447,7 +443,6 @@
         // Overlay & Audio Logic
         function openInvitation() {
             const overlay = document.getElementById('welcome-overlay');
-            // Reactive pull-up animation
             overlay.style.transform = 'translateY(-100%)';
             overlay.style.opacity = '0';
             
@@ -455,7 +450,6 @@
                 overlay.style.display = 'none';
             }, 1000);
 
-            // Inject music
             const audioContainer = document.getElementById('audio-container');
             audioContainer.innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/uLUBmLK45AA?autoplay=1&loop=1&playlist=uLUBmLK45AA" frameborder="0" allow="autoplay"></iframe>';
         }
