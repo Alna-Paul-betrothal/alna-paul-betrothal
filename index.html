@@ -368,6 +368,7 @@
             
             <div class="swiper mySwiper" data-aos="zoom-in-up" data-aos-delay="200">
                 <div class="swiper-wrapper">
+                    <!-- Updated Photo Names -->
                     <div class="swiper-slide">
                         <img src="MWL09488.jpg.jpeg" alt="Alna and Paul">
                     </div>
@@ -395,8 +396,9 @@
                 <strong>Eram International Convention and Exhibition Centre</strong>
             </div>
 
+            <!-- Fixed Google Map Code -->
             <div class="map-wrapper" data-aos="fade-up" data-aos-delay="400">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.514332463066!2d76.3216893!3d10.056919!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080c3a27ec651b%3A0x6b19a1803738e4df!2sEram%20International%20Convention%20Centre!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://maps.google.com/maps?q=Eram%20International%20Convention%20and%20Exhibition%20Centre,%20Perumbavoor&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
 
@@ -412,8 +414,8 @@
         // Initialize Scroll Animations
         AOS.init({
             duration: 1000,
-            once: true,
-            offset: 100,
+            once: true, // Animations happen only once while scrolling down
+            offset: 100, // Trigger animations slightly earlier
         });
 
         // Initialize 3D Swiper Gallery
@@ -443,6 +445,7 @@
         // Overlay & Audio Logic
         function openInvitation() {
             const overlay = document.getElementById('welcome-overlay');
+            // Reactive pull-up animation
             overlay.style.transform = 'translateY(-100%)';
             overlay.style.opacity = '0';
             
@@ -450,6 +453,7 @@
                 overlay.style.display = 'none';
             }, 1000);
 
+            // Inject music
             const audioContainer = document.getElementById('audio-container');
             audioContainer.innerHTML = '<iframe width="1" height="1" src="https://www.youtube.com/embed/uLUBmLK45AA?autoplay=1&loop=1&playlist=uLUBmLK45AA" frameborder="0" allow="autoplay"></iframe>';
         }
