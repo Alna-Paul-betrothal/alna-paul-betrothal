@@ -678,30 +678,35 @@
             autoplay: { delay: 3500, disableOnInteraction: false }
         });
 
-        // 3. Bulletproof Auto-Scroll Logic
+        // 3. BULLETPROOF AUTO-SCROLL LOGIC
         let autoScrollTimer;
         let isAutoScrolling = false;
+        let lastY = -1;
+        let stuckFrames = 0;
 
         function startAutoScroll() {
             isAutoScrolling = true;
+            stuckFrames = 0;
+            
             function scrollStep() {
                 if (!isAutoScrolling) return;
                 
                 window.scrollBy(0, 1.5); 
                 
-                // Calculates the absolute maximum height of the page to know exactly when to stop
-                const scrollHeight = Math.max(
-                    document.body.scrollHeight, document.documentElement.scrollHeight,
-                    document.body.offsetHeight, document.documentElement.offsetHeight,
-                    document.body.clientHeight, document.documentElement.clientHeight
-                );
-
-                // Stop scrolling if we have reached the bottom (with a 50px buffer for mobile address bars)
-                if (Math.ceil(window.innerHeight + window.scrollY) >= scrollHeight - 50) {
-                    stopAutoScroll();
-                    return; 
+                // Motion Sensor: Checks if the page is physically moving
+                // Math.abs accounts for sub-pixel rendering on high-DPI mobile screens
+                if (Math.abs(window.scrollY - lastY) < 1) {
+                    stuckFrames++;
+                    // If stuck for 20 continuous frames (approx 1/3 of a second), we hit the absolute floor
+                    if (stuckFrames > 20) {
+                        stopAutoScroll();
+                        return;
+                    }
+                } else {
+                    stuckFrames = 0; // Reset if we successfully moved
                 }
                 
+                lastY = window.scrollY;
                 autoScrollTimer = requestAnimationFrame(scrollStep);
             }
             scrollStep();
@@ -714,9 +719,9 @@
             }
         }
 
-        // Only stops the auto-scroll if the user ACTIVELY swipes or scrolls
+        // Only stops the auto-scroll if the user ACTIVELY touches or scrolls
+        window.addEventListener('touchstart', stopAutoScroll, { passive: true });
         window.addEventListener('wheel', stopAutoScroll, { passive: true });
-        window.addEventListener('touchmove', stopAutoScroll, { passive: true });
 
         // 4. Overlay & Audio Logic
         function openInvitation() {
@@ -730,7 +735,6 @@
             setTimeout(() => { document.getElementById('h-text3').classList.add('active'); }, 1100);
             setTimeout(() => { document.getElementById('h-text4').classList.add('active'); }, 1500);
 
-            // Wait for entrance animations to finish, then start the scroll journey
             setTimeout(() => { startAutoScroll(); }, 4500);
 
             const audioContainer = document.getElementById('audio-container');
